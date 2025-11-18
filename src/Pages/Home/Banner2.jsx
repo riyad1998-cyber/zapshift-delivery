@@ -3,7 +3,7 @@ import booking from "../../assets/bookingIcon.png";
 
 const Banner2 = () => {
   return (
-    <div className="px-4 md:px-8 lg:px-16 mb-4">
+    <div className="px-4 md:px-8 lg:px-16 mb-6 md:mt-6">
       <h1 className="font-extrabold text-[24px] md:text-[32px] text-center md:text-left">
         How it Works
       </h1>
