@@ -1,0 +1,54 @@
+import React, { use } from "react";
+import { EffectCoverflow, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ReviewCard from "./ReviewCard";
+
+const Reviews = ({ reviewsPromise }) => {
+  const reviews = use(reviewsPromise);
+  console.log(reviews);
+
+  return (
+    <div>
+      <div className="text-center">
+        <h3 className="text-3xl text-center font-bold ">Review</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nostrum sunt laborum commodi fugit soluta debitis ea velit, iste porro.</p>
+      </div>
+
+      <>
+        <Swiper
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
+
+          slidesPerView={3}
+
+          
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Pagination]}
+          className="mySwiper"
+        >
+          {reviews.map((review) => (
+            <SwiperSlide key={review._id}>
+              <ReviewCard review={review}></ReviewCard>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </>
+    </div>
+  );
+};
+
+export default Reviews;
