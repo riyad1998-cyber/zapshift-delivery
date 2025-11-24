@@ -1,5 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "../../Hooks/useAuth";
+import { Link } from "react-router";
+import SocialLogin from "./SocialLogin";
 
 const Register = () => {
   const {
@@ -7,19 +10,60 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleRegistration = () => {
 
+  const {registerUser}= useAuth();
+
+
+  const handleRegistration = (data) => {
+registerUser(data.email, data.password)
+.then(result =>{
+    console.log(result.user)
+})
+.catch(error =>{
+    console.log(error)
+})
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(handleRegistration)}>
+    <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
+
+        <h3 className='text-3xl text-center'>Welcome Back</h3>
+            <p className='text-center'>Please Register</p>
+
+      <form className="card-body" onSubmit={handleSubmit(handleRegistration)}>
         <fieldset className="fieldset">
+          {/*Image Field */}
+          <label className="label">Photo</label>
+          
+          <input
+            type="file"
+            {...register("photo", { required: true })}
+            className="file-input"
+            placeholder="Your Photo"
+          />
+
+          {errors.Name?.type === "required" && (
+            <p className="text-red-500">Photo is required</p>
+          )}
+          {/* Name Field */}
+          <label className="label">Name</label>
+          <input
+            type="text"
+            {...register("Name", { required: true })}
+            className="input"
+            placeholder="Your Name"
+          />
+
+          {errors.Name?.type === "required" && (
+            <p className="text-red-500">Name is required</p>
+          )}
+          {/* Email Field */}
           <label className="label">Email</label>
           <input
             type="email"
             {...register("email", { required: true })}
             className="input"
-            placeholder="Email"
+            placeholder="Your Email"
           />
 
           {errors.email?.type === "required" && (
@@ -47,9 +91,11 @@ const Register = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4">Register</button>
         </fieldset>
+        <p>Already have an account? <Link className='text-blue-400 underline' to="/register">Login</Link></p>
       </form>
+      <SocialLogin></SocialLogin>
     </div>
   );
 };
